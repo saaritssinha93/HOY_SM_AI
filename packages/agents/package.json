@@ -1,5 +1,5 @@
 {
-  "name": "@hoy/shared",
+  "name": "@hoy/agents",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,11 +13,13 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",
-    "@supabase/supabase-js": "^2.45.0",
+    "@hoy/control": "*",
+    "@hoy/safety": "*",
+    "@hoy/shared": "*",
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "@types/node": "^20.14.0"
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
   }
 }

@@ -16,13 +16,15 @@ let client: SupabaseClient | null = null;
 export function db(): SupabaseClient {
   if (client) return client;
 
-  const url = process.env.SUPABASE_URL;
+  // Accept either SUPABASE_URL (worker/CLI convention) or NEXT_PUBLIC_SUPABASE_URL
+  // (Next.js convention) — the dashboard's .env.local uses the prefixed name.
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !key) {
     throw new Error(
-      "Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. " +
-        "Copy .env.example to .env and follow db/SETUP.md.",
+      "Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) and/or SUPABASE_SERVICE_ROLE_KEY. " +
+        "Check your .env (or .env.local for the dashboard) — see db/SETUP.md.",
     );
   }
 

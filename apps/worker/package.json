@@ -1,0 +1,23 @@
+{
+  "name": "@hoy/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "execute-pending": "tsx --env-file=../../.env src/index.ts execute-pending",
+    "standup": "tsx --env-file=../../.env src/index.ts standup",
+    "weekly-memo": "tsx --env-file=../../.env src/index.ts weekly-memo",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hoy/agents": "*",
+    "@hoy/control": "*",
+    "@hoy/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

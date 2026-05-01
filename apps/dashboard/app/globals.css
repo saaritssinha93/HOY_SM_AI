@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  @apply bg-cream text-ink;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Mobile-friendly tap targets */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}

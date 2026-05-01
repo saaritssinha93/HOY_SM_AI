@@ -8,7 +8,11 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "echo 'No dev command yet — Phase 0 scaffold. See README §8 for next steps.'"
+    "hoy": "npm run hoy --workspace=@hoy/cli --",
+    "worker:execute-pending": "npm run execute-pending --workspace=@hoy/worker",
+    "worker:standup": "npm run standup --workspace=@hoy/worker",
+    "dashboard:dev": "npm run dev --workspace=@hoy/dashboard",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "engines": {
     "node": ">=20"
