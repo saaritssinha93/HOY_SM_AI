@@ -1,0 +1,15 @@
+-- HOY_SM_AI · canonical schema reference
+-- The actual DDL lives in migrations/ — this file is a pointer.
+--
+-- To inspect or apply the schema, see:
+--   db/migrations/0001_initial_schema.sql   ← the 12-table initial schema
+--
+-- To set up Supabase from scratch, see:
+--   db/SETUP.md
+--
+-- Conventions (all tables follow these):
+--   - id         uuid primary key default gen_random_uuid()
+--   - created_at timestamptz not null default now()
+--   - updated_at timestamptz not null default now() (auto-set via trigger)
+--   - PII columns (email, phone) stored as SHA-256 hashes
+--   - audit_log is APPEND-ONLY (no UPDATE / DELETE) — enforced via RLS

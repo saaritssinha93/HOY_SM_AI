@@ -1,0 +1,35 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+.pnpm-store/
+npm-debug.log*
+
+# Builds
+.next/
+dist/
+build/
+out/
+.turbo/
+.vercel/
+.wrangler/
+
+# Local DB (Supabase is the real DB; local files would be dev-only)
+db/*.db
+db/*.db-journal
+
+# Logs (folder is tracked via README, contents are not)
+logs/*.jsonl
+logs/*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp

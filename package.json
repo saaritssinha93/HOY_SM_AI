@@ -1,0 +1,16 @@
+{
+  "name": "hoy-sm-ai",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Multi-agent ops system for House of Yeashi (HOY) — see README.md",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "echo 'No dev command yet — Phase 0 scaffold. See README §8 for next steps.'"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
