@@ -17,12 +17,14 @@
           "name": "t:names.header",
           "static": true,
           "settings": {
-            "content_direction": "row",
+            "content_direction": "column",
             "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "gap": 12,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 8,
             "width": "fill",
             "inherit_color_scheme": true,
             "color_scheme": "",
@@ -30,7 +32,7 @@
             "border": "none",
             "border_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 16,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -42,7 +44,7 @@
                 "text": "<h3>Bestsellers</h3>",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
-                "alignment": "left"
+                "alignment": "center"
               }
             },
             "product_list_button": {
@@ -114,7 +116,7 @@
         }
       },
       "settings": {
-        "collection": "all",
+        "collection": "earrings",
         "max_products": 8,
         "layout_type": "grid",
         "carousel_on_mobile": true,
