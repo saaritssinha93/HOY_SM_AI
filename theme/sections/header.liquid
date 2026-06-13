@@ -352,23 +352,12 @@
     </a>
   </div>
 
-  <div class="hoy-header-marquee hoy-header-marquee--arrivals" aria-label="New arrivals announcements">
-    <div class="hoy-header-marquee__track" data-hoy-marquee-speed="34">
+  <div class="hoy-header-marquee hoy-header-marquee--combined" aria-label="Store announcements">
+    <div class="hoy-header-marquee__track" data-hoy-marquee-speed="30">
       {% for repeat in (1..2) %}
         <div class="hoy-header-marquee__group" aria-hidden="{% if repeat == 2 %}true{% else %}false{% endif %}">
-          {% for item_repeat in (1..4) %}
+          {% for pair in (1..3) %}
             <a class="hoy-header-marquee__item" href="{{ routes.collections_url }}/buy-1-get-1">BUY 1 GET 1 FREE is now live --&gt;</a>
-          {% endfor %}
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-
-  <div class="hoy-header-marquee hoy-header-marquee--promo" aria-label="Store promotions">
-    <div class="hoy-header-marquee__track hoy-header-marquee__track--slow" data-hoy-marquee-speed="24">
-      {% for repeat in (1..2) %}
-        <div class="hoy-header-marquee__group" aria-hidden="{% if repeat == 2 %}true{% else %}false{% endif %}">
-          {% for item_repeat in (1..6) %}
             <a class="hoy-header-marquee__item" href="{{ routes.collections_url }}/ocean-muse-layered-necklace">New Arrivals --&gt;</a>
           {% endfor %}
         </div>
@@ -591,23 +580,12 @@
     white-space: nowrap;
   }
 
-  .hoy-header-marquee--arrivals {
-    padding-block: 9px;
-    background: #ffffff;
-    color: #111111;
-    border-block-end: 1px solid rgb(17 17 17 / 0.08);
-    font-size: 0.875rem;
-    line-height: 1;
-  }
-
-  .hoy-header-marquee--promo {
+  .hoy-header-marquee--combined {
     padding-block: 10px;
-    background: #000000;
+    background: #111111;
     color: #ffffff;
     font-size: 0.8125rem;
-    font-weight: 600;
     line-height: 1;
-    text-transform: uppercase;
   }
 
   .hoy-header-marquee__track {
