@@ -1,0 +1,372 @@
+{%- unless customer -%}
+{%- liquid
+  assign hoy_discount_success = false
+  assign hoy_discount_error = false
+-%}
+
+{%- capture hoy_discount_form -%}
+  {%- form 'customer', id: 'hoy-discount-signup-form', class: 'hoy-discount-signup__form' -%}
+    {%- liquid
+      if form.posted_successfully?
+        assign hoy_discount_success = true
+      endif
+
+      if form.errors
+        assign hoy_discount_error = true
+      endif
+    -%}
+
+    <input type="hidden" name="contact[tags]" value="newsletter,HOY10-first-purchase">
+    <input type="hidden" name="contact[accepts_marketing]" value="true">
+
+    {%- unless form.posted_successfully? -%}
+      <label class="hoy-discount-signup__label" for="HoyDiscountEmail">Email address</label>
+      <div class="hoy-discount-signup__input-row">
+        <input
+          id="HoyDiscountEmail"
+          class="hoy-discount-signup__input"
+          type="email"
+          name="contact[email]"
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          placeholder="Enter your email"
+          required
+          {% if form.errors %}
+            autofocus
+            aria-invalid="true"
+            aria-describedby="HoyDiscountError"
+          {% endif %}
+        >
+        <button class="hoy-discount-signup__submit" type="submit">Get code</button>
+      </div>
+    {%- endunless -%}
+
+    {%- if form.errors -%}
+      <p id="HoyDiscountError" class="hoy-discount-signup__message hoy-discount-signup__message--error">
+        {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+      </p>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? -%}
+      <div class="hoy-discount-signup__success" tabindex="-1">
+        <p class="hoy-discount-signup__message">Your code is ready.</p>
+        <div class="hoy-discount-signup__code-row">
+          <div class="hoy-discount-signup__code" aria-label="Discount code" data-hoy-discount-code>HOY10</div>
+          <button class="hoy-discount-signup__copy" type="button" data-hoy-discount-copy>Copy</button>
+        </div>
+        <p class="hoy-discount-signup__copy-status" aria-live="polite" data-hoy-discount-copy-status></p>
+        <a class="hoy-discount-signup__shop" href="/collections/ocean-muse-layered-necklace">Shop New Arrivals</a>
+      </div>
+    {%- endif -%}
+  {%- endform -%}
+{%- endcapture -%}
+
+<div
+  class="hoy-discount-signup{% if hoy_discount_success %} hoy-discount-signup--success{% endif %}{% if hoy_discount_error %} hoy-discount-signup--error{% endif %}"
+  data-hoy-discount-signup
+  aria-hidden="true"
+>
+  <div class="hoy-discount-signup__backdrop" data-hoy-discount-close></div>
+  <section
+    class="hoy-discount-signup__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="HoyDiscountTitle"
+  >
+    <button class="hoy-discount-signup__close" type="button" aria-label="Close discount signup" data-hoy-discount-close>
+      &times;
+    </button>
+    <p class="hoy-discount-signup__eyebrow">New here?</p>
+    <h2 id="HoyDiscountTitle" class="hoy-discount-signup__title">Get 10% off your first purchase</h2>
+    <p class="hoy-discount-signup__text">Enter your email to unlock your discount code.</p>
+    {{ hoy_discount_form }}
+  </section>
+</div>
+
+<style>
+  .hoy-discount-signup {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+  }
+
+  .hoy-discount-signup.is-visible {
+    display: flex;
+  }
+
+  .hoy-discount-signup__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .hoy-discount-signup__panel {
+    position: relative;
+    width: min(100%, 430px);
+    border: 1px solid rgba(18, 18, 18, 0.12);
+    border-radius: 8px;
+    background: #ffffff;
+    color: #121212;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  }
+
+  .hoy-discount-signup__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .hoy-discount-signup__eyebrow {
+    margin: 0 0 8px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hoy-discount-signup__title {
+    margin: 0;
+    max-width: 12em;
+    font-size: clamp(1.55rem, 4vw, 2.15rem);
+    line-height: 1.08;
+  }
+
+  .hoy-discount-signup__text {
+    margin: 12px 0 20px;
+    color: rgba(18, 18, 18, 0.72);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .hoy-discount-signup__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .hoy-discount-signup__input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .hoy-discount-signup__input {
+    min-width: 0;
+    flex: 1 1 auto;
+    height: 46px;
+    border: 1px solid rgba(18, 18, 18, 0.18);
+    border-radius: 4px;
+    padding: 0 12px;
+    color: inherit;
+    font: inherit;
+  }
+
+  .hoy-discount-signup__submit,
+  .hoy-discount-signup__shop,
+  .hoy-discount-signup__copy {
+    min-height: 46px;
+    border: 1px solid #121212;
+    border-radius: 4px;
+    background: #121212;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .hoy-discount-signup__submit {
+    padding: 0 18px;
+    white-space: nowrap;
+  }
+
+  .hoy-discount-signup__message {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .hoy-discount-signup__message--error {
+    margin-top: 10px;
+    color: #a11515;
+  }
+
+  .hoy-discount-signup__success {
+    display: grid;
+    gap: 10px;
+  }
+
+  .hoy-discount-signup__code-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .hoy-discount-signup__code {
+    flex: 1 1 auto;
+    border: 1px dashed rgba(18, 18, 18, 0.45);
+    border-radius: 4px;
+    padding: 14px;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 0.12em;
+  }
+
+  .hoy-discount-signup__copy {
+    flex: 0 0 auto;
+    padding: 0 16px;
+  }
+
+  .hoy-discount-signup__copy-status {
+    min-height: 1.2em;
+    margin: 0;
+    color: rgba(18, 18, 18, 0.72);
+    font-size: 0.88rem;
+  }
+
+  .hoy-discount-signup__shop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+  }
+
+  @media screen and (max-width: 479px) {
+    .hoy-discount-signup {
+      align-items: flex-end;
+      padding: 12px;
+    }
+
+    .hoy-discount-signup__panel {
+      padding: 24px 18px 18px;
+    }
+
+    .hoy-discount-signup__input-row {
+      flex-direction: column;
+    }
+
+    .hoy-discount-signup__submit,
+    .hoy-discount-signup__copy {
+      width: 100%;
+    }
+
+    .hoy-discount-signup__code-row {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector('[data-hoy-discount-signup]');
+    if (!root) return;
+
+    const storageKey = 'hoyDiscountSignupState';
+    const cooldownDays = 7;
+    const success = Boolean(root.querySelector('.hoy-discount-signup__success'));
+    const error = Boolean(root.querySelector('.hoy-discount-signup__message--error'));
+
+    const readState = () => {
+      const raw = window.localStorage.getItem(storageKey);
+      if (!raw) return {};
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return { status: raw }; // legacy plain-string value ('dismissed' / 'claimed')
+      }
+    };
+    const writeState = (status) => {
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify({ status, ts: Date.now() }));
+      } catch (e) {
+        /* storage unavailable — fail open, popup still works this visit */
+      }
+    };
+    const state = readState();
+
+    const open = () => {
+      root.classList.add('is-visible');
+      root.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      const focusTarget = root.querySelector('.hoy-discount-signup__success, input, button');
+      focusTarget?.focus?.();
+    };
+
+    const close = () => {
+      root.classList.remove('is-visible');
+      root.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      if (!success) writeState('dismissed');
+    };
+
+    // Rendered in the layout, so this runs sitewide incl. the homepage. Show to
+    // first-time visitors; re-engage people who only dismissed it after a cooldown;
+    // never nag anyone who already claimed the code.
+    const cooldownMs = cooldownDays * 24 * 60 * 60 * 1000;
+    const dismissedRecently =
+      state.status === 'dismissed' && state.ts && Date.now() - state.ts < cooldownMs;
+
+    if (success) {
+      writeState('claimed');
+      open();
+    } else if (error) {
+      open();
+    } else if (state.status !== 'claimed' && !dismissedRecently) {
+      window.setTimeout(open, 1400);
+    }
+
+    root.querySelectorAll('[data-hoy-discount-close]').forEach((button) => {
+      button.addEventListener('click', close);
+    });
+
+    root.querySelector('[data-hoy-discount-copy]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget;
+      const code = root.querySelector('[data-hoy-discount-code]')?.textContent?.trim();
+      const status = root.querySelector('[data-hoy-discount-copy-status]');
+      if (!code) return;
+
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch (error) {
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+      }
+
+      button.textContent = 'Copied';
+      if (status) status.textContent = 'Code copied. Use it at checkout.';
+
+      window.setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 2200);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && root.classList.contains('is-visible')) {
+        close();
+      }
+    });
+  })();
+</script>
+{%- endunless -%}
