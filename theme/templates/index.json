@@ -46,19 +46,9 @@
                 "font": "var(--font-body--family)",
                 "alignment": "center"
               }
-            },
-            "product_list_button": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "t:text_defaults.view_all_button_label",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content"
-              }
             }
           },
-          "block_order": ["product_list_text", "product_list_button"]
+          "block_order": ["product_list_text"]
         },
         "static-product-card": {
           "type": "_product-card",
