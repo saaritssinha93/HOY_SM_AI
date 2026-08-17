@@ -1,0 +1,13 @@
+{%- liquid
+  assign destination_url = link.url
+
+  if destination_url contains '/pages/jewellery-mystery-box'
+    if destination_url contains '?'
+      assign destination_url = destination_url | append: '&view=gift-box'
+    else
+      assign destination_url = destination_url | append: '?view=gift-box'
+    endif
+  endif
+
+  echo destination_url
+-%}

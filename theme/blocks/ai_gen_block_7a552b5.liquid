@@ -1,0 +1,280 @@
+{% doc %}
+  @prompt
+    Add a wishlist heart icon to the header that appears next to the shopping bag icon in the top right corner. The heart icon should be clickable and match the styling of the existing header icons. Include a wishlist counter badge similar to the cart badge, and ensure it's responsive on mobile devices.
+    
+    it shouild be on the header in netrween account icon and cart icon 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-wishlist-icon-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    padding: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }} svg {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    stroke: currentColor;
+    fill: none;
+    transition: fill 0.2s ease;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }}.filled svg {
+    fill: {{ block.settings.filled_color }};
+    stroke: {{ block.settings.filled_color }};
+  }
+
+  .ai-wishlist-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: {{ block.settings.badge_background }};
+    color: {{ block.settings.badge_text_color }};
+    border-radius: 50%;
+    min-width: {{ block.settings.badge_size }}px;
+    height: {{ block.settings.badge_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 600;
+    padding: 0 4px;
+    pointer-events: none;
+  }
+
+  .ai-wishlist-badge-{{ ai_gen_id }}.hidden {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-wishlist-link-{{ ai_gen_id }} svg {
+      width: {{ block.settings.icon_size_mobile }}px;
+      height: {{ block.settings.icon_size_mobile }}px;
+    }
+
+    .ai-wishlist-badge-{{ ai_gen_id }} {
+      min-width: {{ block.settings.badge_size_mobile }}px;
+      height: {{ block.settings.badge_size_mobile }}px;
+      font-size: {{ block.settings.badge_font_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<wishlist-icon-{{ ai_gen_id }}
+  class="ai-wishlist-icon-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <a
+    href="{{ block.settings.wishlist_page_url }}"
+    class="ai-wishlist-link-{{ ai_gen_id }}"
+    aria-label="Wishlist"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+    <span
+      class="ai-wishlist-badge-{{ ai_gen_id }} {% if block.settings.initial_count == 0 %}hidden{% endif %}"
+      data-wishlist-count
+    >
+      {{ block.settings.initial_count }}
+    </span>
+  </a>
+</wishlist-icon-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class WishlistIcon{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.link = this.querySelector('.ai-wishlist-link-{{ ai_gen_id }}');
+        this.badge = this.querySelector('[data-wishlist-count]');
+        this.storageKey = 'wishlist_items';
+      }
+
+      connectedCallback() {
+        this.updateBadge();
+        this.setupStorageListener();
+      }
+
+      updateBadge() {
+        const wishlistItems = this.getWishlistItems();
+        const count = wishlistItems.length;
+
+        if (this.badge) {
+          this.badge.textContent = count;
+          if (count > 0) {
+            this.badge.classList.remove('hidden');
+            this.link.classList.add('filled');
+          } else {
+            this.badge.classList.add('hidden');
+            this.link.classList.remove('filled');
+          }
+        }
+      }
+
+      getWishlistItems() {
+        try {
+          const items = localStorage.getItem(this.storageKey);
+          return items ? JSON.parse(items) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      setupStorageListener() {
+        window.addEventListener('storage', (e) => {
+          if (e.key === this.storageKey) {
+            this.updateBadge();
+          }
+        });
+
+        document.addEventListener('wishlist:updated', () => {
+          this.updateBadge();
+        });
+      }
+    }
+
+    customElements.define('wishlist-icon-{{ ai_gen_id }}', WishlistIcon{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist icon",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Wishlist settings"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_page_url",
+      "label": "Wishlist page URL"
+    },
+    {
+      "type": "range",
+      "id": "initial_count",
+      "min": 0,
+      "max": 99,
+      "step": 1,
+      "label": "Initial count",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Icon style"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop icon size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile icon size",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "filled_color",
+      "label": "Filled heart color",
+      "default": "#283e36"
+    },
+    {
+      "type": "header",
+      "content": "Badge style"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop badge size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile badge size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop font size",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_mobile",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile font size",
+      "default": 9
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge background",
+      "default": "#283e36"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist icon"
+    }
+  ]
+}
+{% endschema %}

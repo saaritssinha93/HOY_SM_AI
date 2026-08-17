@@ -1,0 +1,245 @@
+{% doc %}
+  @prompt
+    wishlist icon beside the cart icon
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-wishlist-icon-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: {{ block.settings.icon_color }};
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.icon_hover_color }};
+  }
+
+  .ai-wishlist-icon-svg-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    stroke: currentColor;
+    fill: none;
+    transition: fill 0.3s ease;
+  }
+
+  .ai-wishlist-link-{{ ai_gen_id }}:hover .ai-wishlist-icon-svg-{{ ai_gen_id }} {
+    fill: {{ block.settings.icon_hover_fill }};
+  }
+
+  .ai-wishlist-count-{{ ai_gen_id }} {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: {{ block.settings.badge_background }};
+    color: {{ block.settings.badge_text_color }};
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 600;
+    min-width: {{ block.settings.badge_size }}px;
+    height: {{ block.settings.badge_size }}px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  {% if block.settings.show_label %}
+    .ai-wishlist-label-{{ ai_gen_id }} {
+      margin-left: 8px;
+      font-size: {{ block.settings.label_font_size }}px;
+      color: {{ block.settings.icon_color }};
+      transition: color 0.3s ease;
+    }
+
+    .ai-wishlist-link-{{ ai_gen_id }}:hover .ai-wishlist-label-{{ ai_gen_id }} {
+      color: {{ block.settings.icon_hover_color }};
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-wishlist-icon-svg-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.9 }}px;
+      height: {{ block.settings.icon_size | times: 0.9 }}px;
+    }
+
+    .ai-wishlist-count-{{ ai_gen_id }} {
+      font-size: {{ block.settings.badge_font_size | times: 0.9 }}px;
+      min-width: {{ block.settings.badge_size | times: 0.9 }}px;
+      height: {{ block.settings.badge_size | times: 0.9 }}px;
+    }
+
+    {% if block.settings.show_label %}
+      .ai-wishlist-label-{{ ai_gen_id }} {
+        font-size: {{ block.settings.label_font_size | times: 0.9 }}px;
+      }
+    {% endif %}
+  }
+{% endstyle %}
+
+<div class="ai-wishlist-icon-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <a href="{{ block.settings.wishlist_page_url }}" class="ai-wishlist-link-{{ ai_gen_id }}" aria-label="View wishlist">
+    <svg class="ai-wishlist-icon-svg-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="{{ block.settings.icon_stroke_width }}" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+    
+    {% if block.settings.show_label %}
+      <span class="ai-wishlist-label-{{ ai_gen_id }}">{{ block.settings.label_text }}</span>
+    {% endif %}
+    
+    {% if block.settings.show_count and block.settings.wishlist_count > 0 %}
+      <span class="ai-wishlist-count-{{ ai_gen_id }}">{{ block.settings.wishlist_count }}</span>
+    {% endif %}
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist icon",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Wishlist settings"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_page_url",
+      "label": "Wishlist page URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show item count",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "wishlist_count",
+      "label": "Item count",
+      "min": 0,
+      "max": 99,
+      "step": 1,
+      "default": 0,
+      "info": "Update this manually or connect to your wishlist app"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "icon_stroke_width",
+      "label": "Icon stroke width",
+      "min": 1,
+      "max": 3,
+      "step": 0.5,
+      "default": 1.5
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#0a0f0e"
+    },
+    {
+      "type": "color",
+      "id": "icon_hover_color",
+      "label": "Icon hover color",
+      "default": "#283e36"
+    },
+    {
+      "type": "color",
+      "id": "icon_hover_fill",
+      "label": "Icon hover fill",
+      "default": "#a1d9c6"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Show label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label text",
+      "default": "Wishlist"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Label font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Count badge"
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge size",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Badge font size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge background",
+      "default": "#283e36"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist icon"
+    }
+  ]
+}
+{% endschema %}

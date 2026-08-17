@@ -1,0 +1,93 @@
+<section class="hoy-bogo-page">
+  <div class="hoy-bogo-page__inner page-width">
+    <p class="hoy-bogo-page__eyebrow">Limited time offer</p>
+    <h1 class="hoy-bogo-page__title">New Here? Get 10% OFF on first order Code - WELCOME10</h1>
+    <p class="hoy-bogo-page__copy">
+      Pick your favourite jewellery pieces and enjoy the current House of Yeashi offer on eligible styles.
+    </p>
+    <a class="hoy-bogo-page__button" href="{{ routes.all_products_collection_url }}">Shop now</a>
+  </div>
+</section>
+
+<style>
+  .hoy-bogo-page {
+    background: #fffaf0;
+    color: #2d2118;
+  }
+
+  .hoy-bogo-page__inner {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding-top: 84px;
+    padding-bottom: 84px;
+    text-align: center;
+  }
+
+  .hoy-bogo-page__eyebrow {
+    margin: 0;
+    color: #b48a3c;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hoy-bogo-page__title {
+    max-width: 860px;
+    margin: 0;
+    color: #b48a3c;
+    font-size: clamp(34px, 5vw, 72px);
+    font-weight: 800;
+    line-height: 1.04;
+  }
+
+  .hoy-bogo-page__copy {
+    max-width: 620px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .hoy-bogo-page__button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 0 24px;
+    border: 1px solid #b48a3c;
+    background: #b48a3c;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .hoy-bogo-page__button:hover {
+    background: #2d2118;
+    border-color: #2d2118;
+  }
+
+  @media screen and (max-width: 749px) {
+    .hoy-bogo-page__inner {
+      min-height: 360px;
+      padding-top: 58px;
+      padding-bottom: 58px;
+    }
+
+    .hoy-bogo-page__copy {
+      font-size: 16px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "BOGO page",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,222 @@
+{%- liquid
+  assign product_resource = closest.product
+  assign product_form_id = 'BuyButtons-ProductForm-' | append: section.id
+-%}
+
+{%- if product_resource.handle == 'mystery-jars' -%}
+  <div
+    id="MysteryJarOptions-{{ section.id }}"
+    class="mystery-jar-options spacing-style"
+    style="{% render 'spacing-style', settings: block.settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="mystery-jar-options__choices" aria-label="Mystery Jar details">
+      <h2 class="mystery-jar-options__heading">Mystery Jar details</h2>
+
+      <div class="mystery-jar-options__choice">
+        <span class="mystery-jar-options__copy">
+          <span class="mystery-jar-options__title">Trial Jar</span>
+          <span class="mystery-jar-options__detail">4-5 pieces, including 1 hair accessory.</span>
+        </span>
+        <span class="mystery-jar-options__price">₹599</span>
+      </div>
+
+      <div class="mystery-jar-options__choice">
+        <span class="mystery-jar-options__copy">
+          <span class="mystery-jar-options__title">Mini Jar</span>
+          <span class="mystery-jar-options__detail">7-8 pieces, including 1 hair accessory.</span>
+        </span>
+        <span class="mystery-jar-options__price">₹1,199</span>
+      </div>
+
+      <div class="mystery-jar-options__choice">
+        <span class="mystery-jar-options__copy">
+          <span class="mystery-jar-options__title">Big Mystery Jar</span>
+          <span class="mystery-jar-options__detail">12-13 pieces with 1 watch guaranteed.</span>
+        </span>
+        <span class="mystery-jar-options__price">₹3,500</span>
+      </div>
+
+      <div class="mystery-jar-options__choice">
+        <span class="mystery-jar-options__copy">
+          <span class="mystery-jar-options__title">Limited Edition Signature Jar</span>
+          <span class="mystery-jar-options__detail">26 pieces with 2 watches guaranteed.</span>
+        </span>
+        <span class="mystery-jar-options__price mystery-jar-options__price--sale">
+          <s>₹7,000</s>
+          ₹6,000
+        </span>
+      </div>
+    </div>
+
+    <div class="mystery-jar-options__preference">
+      <label class="mystery-jar-options__heading" for="MysteryJarPreference-{{ section.id }}">Your preference</label>
+      <p class="mystery-jar-options__help">
+        Tell us your vibe, favourite colours, or any special request - we'll try our best to accommodate.
+      </p>
+      <textarea
+        id="MysteryJarPreference-{{ section.id }}"
+        class="field__input mystery-jar-options__textarea"
+        name="properties[Preference]"
+        form="{{ product_form_id }}"
+        maxlength="250"
+        rows="3"
+        placeholder="E.g. I love gold tones, dainty pieces, floral charms..."
+      ></textarea>
+    </div>
+  </div>
+
+{%- endif -%}
+
+{% stylesheet %}
+  .mystery-jar-options {
+    width: 100%;
+  }
+
+  .mystery-jar-options__choices {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .mystery-jar-options__heading {
+    display: block;
+    margin: 0 0 10px;
+    padding: 0;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mystery-jar-options__choice {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    min-height: 76px;
+    padding: 14px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.18);
+    border-radius: 8px;
+    background: rgb(var(--color-background-rgb) / 0.78);
+  }
+
+  .mystery-jar-options__copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .mystery-jar-options__title {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mystery-jar-options__detail {
+    font-size: 0.9rem;
+    line-height: 1.35;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .mystery-jar-options__price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-end;
+    min-width: 74px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .mystery-jar-options__price s {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgb(var(--color-foreground-rgb) / 0.58);
+  }
+
+  .mystery-jar-options__preference {
+    margin-block-start: 18px;
+  }
+
+  .mystery-jar-options__help {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .mystery-jar-options__textarea {
+    width: 100%;
+    min-height: 92px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .mystery-jar-options__choice {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .mystery-jar-options__price {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Mystery jar options",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mystery jar options"
+    }
+  ]
+}
+{% endschema %}

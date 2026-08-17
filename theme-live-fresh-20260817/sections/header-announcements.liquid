@@ -1,0 +1,188 @@
+
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<aside
+  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
+>
+<div    class="announcement-bar__slider"
+    aria-live="polite"
+  >
+    {% liquid
+      assign message_1 = section.settings.marquee_message_1 | default: 'New Here? Get 10% OFF on first order Code - HOY10'
+      assign marquee_link = section.settings.marquee_link | default: '/collections/buy-1-get-1'
+    %}
+    <div class="announcement-bar__marquee">
+      <div class="announcement-bar__marquee-track">
+  <span class="announcement-bar__marquee-item">{{ message_1 }}</span>
+</div>
+    </div>
+</div>
+</aside>
+
+{% stylesheet %}
+  .announcement-bar {
+    border-block-end: var(--border-bottom-width) solid var(--color-border);
+  }
+
+  .announcement-bar__slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+
+    @media screen and (max-width: 749px) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .announcement-bar__slider--marquee {
+    overflow: hidden;
+  }
+
+  .announcement-bar__marquee {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .announcement-bar__marquee-track {
+    display: flex;
+    width: max-content;
+animation: none !important;    will-change: transform;
+  }
+
+  .announcement-bar__marquee-item {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding-inline: clamp(2rem, 8vw, 7rem);
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  @keyframes announcement-bar-marquee {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar__marquee-track {
+      animation: none;
+      transform: translateX(0);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.announcement_bar",
+  "blocks": [
+    {
+      "type": "_announcement"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:settings.scroll_speed",
+      "min": 2,
+      "max": 10,
+      "default": 5,
+      "unit": "sec"
+    },
+    {
+      "type": "text",
+      "id": "marquee_message_1",
+      "label": "Message 1",
+      "default": "New Here? Get 10% OFF on first order Code - HOY10"
+    },
+    {
+      "type": "url",
+      "id": "marquee_link",
+      "label": "Banner link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme-4",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "t:settings.divider_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.announcement_bar",
+      "blocks": {
+        "announcement_1": {
+          "type": "_announcement"
+        }
+      },
+      "block_order": ["announcement_1"]
+    }
+  ]
+}
+{% endschema %}

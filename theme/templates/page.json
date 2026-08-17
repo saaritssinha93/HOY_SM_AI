@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "gift_landing": {
+      "type": "hoy-gift-box-landing",
+      "settings": {
+        "jar_product": "mystery-jars",
+        "heading": "Jewellery Gift Boxes for Every Budget",
+        "intro": "Discover a curated jewellery surprise for birthdays, celebrations, or a little treat for yourself. Compare every Mystery Jar tier, choose the right one, and share your preferred vibe before you order.",
+        "delivery_heading": "Delivery at a glance",
+        "policy_heading": "Returns and order support"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "name": "Title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        },
+        "ai_gen_block_76acbb5_CEp37N": {
+          "type": "ai_gen_block_76acbb5",
+          "name": "Product categories grid",
+          "settings": {
+            "heading": "",
+            "heading_alignment": "center",
+            "collections": [
+              "bracelets",
+              "earrings",
+              "necklace",
+              "other-accessories",
+              "rings"
+            ],
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 5,
+            "section_padding_top": 30,
+            "section_padding_bottom": 40,
+            "card_border_radius": 8,
+            "image_aspect_ratio": 110,
+            "hover_lift": 4,
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "title_size": 16,
+            "title_alignment": "center",
+            "title_color": "#ffffff",
+            "title_color_no_overlay": "#000000",
+            "heading_size": 34,
+            "heading_spacing": 45,
+            "heading_color": "#000000"
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_76acbb5_dYpKwi": {
+          "type": "ai_gen_block_76acbb5",
+          "name": "Product categories grid",
+          "settings": {
+            "heading": "",
+            "heading_alignment": "center",
+            "collections": [
+              "under-999",
+              "under-1999",
+              "under-2999"
+            ],
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 5,
+            "section_padding_top": 30,
+            "section_padding_bottom": 40,
+            "card_border_radius": 8,
+            "image_aspect_ratio": 110,
+            "hover_lift": 4,
+            "show_overlay": true,
+            "overlay_opacity": 50,
+            "title_size": 16,
+            "title_alignment": "center",
+            "title_color": "#ffffff",
+            "title_color_no_overlay": "#000000",
+            "heading_size": 34,
+            "heading_spacing": 45,
+            "heading_color": "#000000"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content",
+        "ai_gen_block_76acbb5_CEp37N",
+        "ai_gen_block_76acbb5_dYpKwi"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 46,
+        "color_scheme": "",
+        "padding-block-start": 35,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "gift_landing",
+    "main"
+  ]
+}

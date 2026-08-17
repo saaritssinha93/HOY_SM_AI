@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "hoy-gift-box-landing",
+      "settings": {
+        "jar_product": "mystery-jars",
+        "heading": "Jewellery Gift Boxes for Every Budget",
+        "intro": "Discover a curated jewellery surprise for birthdays, celebrations, or a little treat for yourself. Compare every Mystery Jar tier, choose the right one, and share your preferred vibe before you order.",
+        "delivery_heading": "Delivery at a glance",
+        "policy_heading": "Returns and order support"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

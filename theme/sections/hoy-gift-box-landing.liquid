@@ -1,0 +1,383 @@
+{% liquid
+  assign jar_product = section.settings.jar_product
+  if jar_product == blank
+    assign jar_product = all_products['mystery-jars']
+  endif
+%}
+
+{% if page.handle == 'jewellery-mystery-box' %}
+  <section class="hoy-gift-box section-{{ section.id }}" aria-labelledby="GiftBoxHeading-{{ section.id }}">
+    <div class="hoy-gift-box__inner">
+    <header class="hoy-gift-box__hero">
+      <p class="hoy-gift-box__eyebrow">House of Yeashi gifting</p>
+      <h1 id="GiftBoxHeading-{{ section.id }}" class="hoy-gift-box__heading">
+        {{ section.settings.heading | default: page.title | escape }}
+      </h1>
+      {% if section.settings.intro != blank %}
+        <p class="hoy-gift-box__intro">{{ section.settings.intro | escape }}</p>
+      {% endif %}
+    </header>
+
+    {% if jar_product != blank %}
+      <div class="hoy-gift-box__comparison-wrap">
+        <div class="hoy-gift-box__section-heading">
+          <p class="hoy-gift-box__eyebrow">Choose your surprise</p>
+          <h2>Compare Mystery Jar tiers</h2>
+          <p>Each button opens the Mystery Jars product with the selected tier already chosen.</p>
+        </div>
+
+        <div class="hoy-gift-box__table-scroll" tabindex="0" aria-label="Scroll to compare Mystery Jar tiers">
+          <table class="hoy-gift-box__table">
+            <thead>
+              <tr>
+                <th scope="col">Tier</th>
+                <th scope="col">Price</th>
+                <th scope="col">What is included</th>
+                <th scope="col">Choose</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for variant in jar_product.variants %}
+                {% liquid
+                  assign contents = ''
+                  assign best_for = ''
+
+                  case variant.title
+                    when 'Trial Jar'
+                      assign contents = '4–5 pieces, including 1 hair accessory.'
+                      assign best_for = 'A first Mystery Jar experience.'
+                    when 'Mini Jar'
+                      assign contents = '7–8 pieces, including 1 hair accessory.'
+                      assign best_for = 'More everyday variety.'
+                    when 'Big Mystery Jar'
+                      assign contents = '12–13 pieces, with 1 watch guaranteed.'
+                      assign best_for = 'A fuller jewellery refresh.'
+                    when 'Limited Edition Signature Jar'
+                      assign contents = '26 pieces, with 2 watches guaranteed.'
+                      assign best_for = 'The most complete Mystery Jar experience.'
+                  endcase
+                %}
+
+                <tr>
+                  <th scope="row" data-label="Tier">
+                    <span class="hoy-gift-box__tier">{{ variant.title | escape }}</span>
+                    {% if best_for != blank %}
+                      <span class="hoy-gift-box__tier-note">{{ best_for }}</span>
+                    {% endif %}
+                  </th>
+                  <td data-label="Price">
+                    <span class="hoy-gift-box__price">
+                      {% if variant.compare_at_price > variant.price %}
+                        <s>{{ variant.compare_at_price | money }}</s>
+                      {% endif %}
+                      {{ variant.price | money }}
+                    </span>
+                  </td>
+                  <td data-label="What is included">
+                    {% if contents != blank %}
+                      {{ contents }}
+                    {% else %}
+                      See product details for this tier.
+                    {% endif %}
+                  </td>
+                  <td data-label="Choose">
+                    {% if variant.available %}
+                      <a class="hoy-gift-box__button" href="{{ jar_product.url }}?variant={{ variant.id }}">
+                        Choose {{ variant.title | escape }}
+                      </a>
+                    {% else %}
+                      <span class="hoy-gift-box__sold-out">Sold out</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <aside class="hoy-gift-box__notice" aria-labelledby="GiftBoxDisclosure-{{ section.id }}">
+        <h2 id="GiftBoxDisclosure-{{ section.id }}">A note about your surprise</h2>
+        <p>
+          Each Mystery Jar is individually curated. Images show the expected style, not the exact items, colours or designs you will receive. You may share your preferences on the product page, but requests cannot be guaranteed. The stated piece counts and guaranteed watch inclusions remain as listed.
+        </p>
+      </aside>
+
+      <div class="hoy-gift-box__details-grid">
+        <section class="hoy-gift-box__detail-card" aria-labelledby="GiftBoxDelivery-{{ section.id }}">
+          <h2 id="GiftBoxDelivery-{{ section.id }}">{{ section.settings.delivery_heading | escape }}</h2>
+          <ul>
+            <li>Orders are usually processed within 2–4 business days.</li>
+            <li>Delivery within India is estimated at 4–10 business days after dispatch.</li>
+            <li>Prepaid orders above ₹999 receive free shipping; orders below ₹999 have a ₹100 shipping fee.</li>
+          </ul>
+          {% if shop.shipping_policy != blank %}
+            <a href="{{ shop.shipping_policy.url }}">Read the shipping policy</a>
+          {% endif %}
+        </section>
+
+        <section class="hoy-gift-box__detail-card" aria-labelledby="GiftBoxPolicy-{{ section.id }}">
+          <h2 id="GiftBoxPolicy-{{ section.id }}">{{ section.settings.policy_heading | escape }}</h2>
+          <p>
+            Mystery Jars are final-sale products. If an item arrives damaged, defective or incorrect, contact us within 24 hours of delivery with a complete, unedited unboxing video for review.
+          </p>
+          {% if shop.refund_policy != blank %}
+            <a href="{{ shop.refund_policy.url }}">Read the refund policy</a>
+          {% endif %}
+        </section>
+      </div>
+    {% elsif request.design_mode %}
+      <p class="hoy-gift-box__editor-note">Select the Mystery Jars product in this section’s settings.</p>
+    {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .hoy-gift-box {
+    color: rgb(var(--color-foreground-rgb));
+    background: rgb(var(--color-background-rgb));
+  }
+
+  .hoy-gift-box__inner {
+    width: min(100% - 32px, 1180px);
+    margin: 0 auto;
+    padding: 56px 0 76px;
+  }
+
+  .hoy-gift-box__hero {
+    max-width: 760px;
+    margin: 0 auto 44px;
+    text-align: center;
+  }
+
+  .hoy-gift-box__eyebrow {
+    margin: 0 0 10px;
+    color: rgb(var(--color-foreground-rgb) / 0.68);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .hoy-gift-box__heading,
+  .hoy-gift-box__section-heading h2,
+  .hoy-gift-box__notice h2,
+  .hoy-gift-box__detail-card h2 {
+    margin: 0;
+    color: inherit;
+  }
+
+  .hoy-gift-box__heading {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.08;
+  }
+
+  .hoy-gift-box__intro,
+  .hoy-gift-box__section-heading > p,
+  .hoy-gift-box__detail-card p {
+    margin: 16px 0 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .hoy-gift-box__comparison-wrap {
+    margin-top: 42px;
+  }
+
+  .hoy-gift-box__section-heading {
+    margin-bottom: 20px;
+  }
+
+  .hoy-gift-box__section-heading h2,
+  .hoy-gift-box__notice h2,
+  .hoy-gift-box__detail-card h2 {
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .hoy-gift-box__table-scroll {
+    overflow-x: auto;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.16);
+    border-radius: 14px;
+  }
+
+  .hoy-gift-box__table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .hoy-gift-box__table th,
+  .hoy-gift-box__table td {
+    padding: 20px;
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    vertical-align: middle;
+  }
+
+  .hoy-gift-box__table thead th {
+    background: rgb(var(--color-foreground-rgb) / 0.05);
+    font-size: 0.84rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hoy-gift-box__table tbody tr:last-child th,
+  .hoy-gift-box__table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .hoy-gift-box__tier,
+  .hoy-gift-box__tier-note,
+  .hoy-gift-box__price {
+    display: block;
+  }
+
+  .hoy-gift-box__tier,
+  .hoy-gift-box__price {
+    font-weight: 700;
+  }
+
+  .hoy-gift-box__tier-note,
+  .hoy-gift-box__price s {
+    margin-top: 4px;
+    color: rgb(var(--color-foreground-rgb) / 0.62);
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .hoy-gift-box__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    color: rgb(var(--color-background-rgb));
+    background: rgb(var(--color-foreground-rgb));
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: opacity 160ms ease;
+  }
+
+  .hoy-gift-box__button:hover {
+    opacity: 0.78;
+  }
+
+  .hoy-gift-box__sold-out {
+    color: rgb(var(--color-foreground-rgb) / 0.62);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .hoy-gift-box__notice {
+    margin-top: 30px;
+    padding: 24px;
+    border-left: 4px solid currentColor;
+    background: rgb(var(--color-foreground-rgb) / 0.055);
+  }
+
+  .hoy-gift-box__notice p {
+    margin: 12px 0 0;
+    line-height: 1.6;
+  }
+
+  .hoy-gift-box__details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .hoy-gift-box__detail-card {
+    padding: 26px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.16);
+    border-radius: 14px;
+  }
+
+  .hoy-gift-box__detail-card ul {
+    display: grid;
+    gap: 9px;
+    margin: 16px 0;
+    padding-left: 20px;
+    line-height: 1.5;
+  }
+
+  .hoy-gift-box__detail-card a {
+    color: inherit;
+    font-weight: 700;
+  }
+
+  .hoy-gift-box__editor-note {
+    padding: 20px;
+    border: 1px dashed currentColor;
+  }
+
+  @media screen and (max-width: 749px) {
+    .hoy-gift-box__inner {
+      width: min(100% - 24px, 1180px);
+      padding: 40px 0 56px;
+    }
+
+    .hoy-gift-box__table {
+      min-width: 680px;
+    }
+
+    .hoy-gift-box__table th,
+    .hoy-gift-box__table td {
+      padding: 16px;
+    }
+
+    .hoy-gift-box__details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "HOY gift box landing",
+  "settings": [
+    {
+      "type": "product",
+      "id": "jar_product",
+      "label": "Mystery Jar product"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Jewellery Gift Boxes for Every Budget"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Discover a curated jewellery surprise for birthdays, celebrations, or a little treat for yourself. Compare every Mystery Jar tier, choose the right one, and share your preferred vibe before you order."
+    },
+    {
+      "type": "text",
+      "id": "delivery_heading",
+      "label": "Delivery heading",
+      "default": "Delivery at a glance"
+    },
+    {
+      "type": "text",
+      "id": "policy_heading",
+      "label": "Policy heading",
+      "default": "Returns and order support"
+    }
+  ],
+  "presets": [
+    {
+      "name": "HOY gift box landing"
+    }
+  ]
+}
+{% endschema %}
