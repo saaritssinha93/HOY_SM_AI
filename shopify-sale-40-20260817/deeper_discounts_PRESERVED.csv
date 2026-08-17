@@ -1,0 +1,3 @@
+CSV Row,Handle,Title,Status,Variant SKU,Option1 Value,Before Price,Before Compare At Price,Original Price Used,Calculated 40% Off Price,Reason
+256,celeste-hex-bangle,Celeste Hex Bangle,active,,Default Title,275.00,500.00,500.00,300.00,Existing selling price is already equal to or lower than the calculated 40%-off price; no price increase applied
+266,bloom-sutra-1,Bloom Sutra Mangalsutra,active,,Default Title,250.00,550.00,550.00,330.00,Existing selling price is already equal to or lower than the calculated 40%-off price; no price increase applied

@@ -114,7 +114,7 @@
     }
 
     const newArrivalLink =
-      '<a class="hoy-header-marquee__item" href="/collections/ocean-muse-layered-necklace">New Arrivals --&gt;</a>';
+      '<a class="hoy-header-marquee__item" href="/collections/all">Rakhi Sale 40% off is now live --&gt;</a>';
 
     promoGroups.forEach((group) => {
       if (group.dataset.hoyPromoUpdated === 'true') return;

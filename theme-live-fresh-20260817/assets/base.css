@@ -2359,6 +2359,23 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   font-size: var(--font-size);
 }
 
+.hoy-sale-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  padding-inline: 0.6rem;
+  color: #ffffff;
+  background: #9b1c1c;
+  border-radius: 999px;
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .custom-font-weight,
 .custom-font-weight > * {
   font-weight: var(--weight);

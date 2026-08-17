@@ -1,0 +1,22 @@
+{%- liquid
+  assign hoy_sale_eligible = false
+
+  if product_resource != blank
+    assign hoy_sale_eligible = true
+
+    if product_resource.handle == 'mystery-jars' or product_resource.handle == 'sea-haven-bracelet'
+      assign hoy_sale_eligible = false
+    endif
+
+    if hoy_sale_eligible
+      for product_collection in product_resource.collections
+        if product_collection.handle == 'ocean-muse-layered-necklace' or product_collection.handle == 'rakshabandhan-hampers'
+          assign hoy_sale_eligible = false
+          break
+        endif
+      endfor
+    endif
+  endif
+
+  echo hoy_sale_eligible
+-%}

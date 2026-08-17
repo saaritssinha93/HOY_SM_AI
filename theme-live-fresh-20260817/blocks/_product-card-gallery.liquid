@@ -1,6 +1,10 @@
 
 
 {% assign product = closest.product %}
+{% capture hoy_sale_eligibility %}
+  {% render 'hoy-sale-eligibility', product_resource: product %}
+{% endcapture %}
+{% assign hoy_sale_eligible = hoy_sale_eligibility | strip %}
 
 {% capture children %}
   {% unless product == blank %}
@@ -11,15 +15,17 @@
         --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
       "
     >
-      {%- if product.available == false or product.compare_at_price > product.price -%}
+      {%- if product.available == false or hoy_sale_eligible == 'true' or product.compare_at_price > product.price -%}
         <div
           class="
             product-badges__badge product-badges__badge--rectangle
-            {% if product.available == false %} color-{{ settings.badge_sold_out_color_scheme }}{% elsif product.compare_at_price > product.price %} color-{{ settings.badge_sale_color_scheme }}{% endif %}
+            {% if product.available == false %} color-{{ settings.badge_sold_out_color_scheme }}{% else %} color-{{ settings.badge_sale_color_scheme }}{% endif %}
           "
         >
           {%- if product.available == false -%}
             {{ 'content.product_badge_sold_out' | t }}
+          {%- elsif hoy_sale_eligible == 'true' -%}
+            40% OFF
           {%- elsif product.compare_at_price > product.price -%}
             {{ 'content.product_badge_sale' | t }}
           {%- endif -%}
